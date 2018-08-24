@@ -13,7 +13,7 @@ ENV SHELL /bin/zsh
 RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 # install development dependencies
-RUN apk add --no-cache git
+RUN apk add --no-cache git less
 
 # install hub
 RUN apk add --no-cache musl-dev
