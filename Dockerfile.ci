@@ -1,0 +1,55 @@
+# Based on https://hub.docker.com/r/circleci/elixir/~/dockerfile/
+
+FROM bitwalker/alpine-elixir-phoenix:1.6.5
+
+LABEL maintainer="bonjour@civilcode.io"
+
+# update package manager
+RUN apk update \
+    apk upgrade --no-cache
+
+RUN apk add git xvfb sudo openssh-client ca-certificates tar gzip parallel net-tools \
+      unzip bzip2 gnupg curl wget
+
+# install jq
+RUN apk add jq && jq --version
+
+# Install Docker
+
+#>    # Then start docker in daemon mode:
+#>    /usr/local/bin/dockerd
+RUN apk add docker \
+  && which docker \
+  && (docker version || true)
+
+# docker compose
+# https://wiki.alpinelinux.org/wiki/Docker#Docker_Compose
+RUN apk add py-pip \
+  && pip install docker-compose \
+  && docker-compose version
+
+# install dockerize
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+  && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+  && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+  && dockerize --version
+
+RUN apk add shadow \
+  && groupadd --gid 3434 circleci \
+  && useradd --uid 3434 --gid circleci --shell /bin/bash --create-home circleci \
+  && echo 'circleci ALL=NOPASSWD: ALL' >> /etc/sudoers.d/50-circleci \
+  && echo 'Defaults    env_keep += "DEBIAN_FRONTEND"' >> /etc/sudoers.d/env_keep
+
+# BEGIN IMAGE CUSTOMIZATIONS
+
+ENV MIX_ENV test
+RUN chown -R circleci /opt
+
+# END IMAGE CUSTOMIZATIONS
+
+ENV HOME /home/circleci
+
+USER circleci
+
+CMD ["/bin/sh"]
