@@ -54,6 +54,22 @@ RUN git clone https://github.com/facebook/watchman.git && \
   make && \
   make install
 
-WORKDIR /app
+# use fixuid to ensure the same user/group on host and container
+# https://github.com/boxboat/fixuid
+RUN addgroup -g 1000 dev && \
+    adduser -u 1000 -G dev -H -s /bin/sh -D dev
 
-CMD ["zsh"]
+RUN USER=dev && \
+    GROUP=dev && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.4-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+
+USER dev:dev
+
+WORKDIR /app
+RUN chown dev:dev /app
+
+ENTRYPOINT ["fixuid"]
