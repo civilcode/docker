@@ -44,10 +44,15 @@ RUN mkdir ~/Development && \
 # Ignore security warnings for aliases included by local dotfiles
 ENV ZSH_DISABLE_COMPFIX true
 
-# add format watcher
-RUN cd /usr/local/bin && \
-    wget https://raw.githubusercontent.com/civilcode/cloud9-bootstrap/master/format_watcher && \
-    chmod +x format_watcher
+# install watchman
+RUN apk add autoconf automake libtool python-dev linux-headers
+RUN git clone https://github.com/facebook/watchman.git && \
+   cd watchman && \
+   git checkout v4.9.0 && \
+  ./autogen.sh && \
+  ./configure && \
+  make && \
+  make install
 
 WORKDIR /app
 
