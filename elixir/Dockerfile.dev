@@ -2,12 +2,11 @@ FROM bitwalker/alpine-elixir-phoenix:1.6.5
 
 LABEL maintainer="bonjour@civilcode.io"
 
-# update package manager
-RUN apk update \
-    apk upgrade --no-cache
-
 # install watchman
-RUN apk add autoconf automake libtool python-dev linux-headers
+RUN apk update && \
+    apk upgrade --no-cache && \
+    apk add autoconf automake libtool python-dev linux-headers
+
 RUN git clone https://github.com/facebook/watchman.git && \
    cd watchman && \
    git checkout v4.9.0 && \
@@ -16,4 +15,6 @@ RUN git clone https://github.com/facebook/watchman.git && \
   make && \
   make install
 
-ENTRYPOINT ["sleep", "infinity"]
+RUN echo "cd /app && watchman -j < .watchman/format.json" >> ~/.bashrc
+
+CMD ["/bin/bash"]

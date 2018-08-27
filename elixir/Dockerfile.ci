@@ -4,12 +4,10 @@ FROM bitwalker/alpine-elixir-phoenix:1.6.5
 
 LABEL maintainer="bonjour@civilcode.io"
 
-# update package manager
 RUN apk update \
-    apk upgrade --no-cache
-
-RUN apk add git xvfb sudo openssh-client ca-certificates tar gzip parallel net-tools \
-      unzip bzip2 gnupg curl wget
+    apk upgrade --no-cache \
+    apk add git xvfb sudo openssh-client ca-certificates tar gzip parallel net-tools \
+            unzip bzip2 gnupg curl wget
 
 # install jq
 RUN apk add jq && jq --version
