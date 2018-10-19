@@ -1,6 +1,6 @@
 # As our primary development platform is Elixir, let's use that as our base image. This also
 # includes a lot of the base dependencies required.
-FROM bitwalker/alpine-elixir-phoenix:1.7.1
+FROM bitwalker/alpine-elixir-phoenix:1.7.3
 
 LABEL maintainer="bonjour@civilcode.io"
 
