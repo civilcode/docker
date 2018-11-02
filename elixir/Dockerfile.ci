@@ -50,4 +50,6 @@ ENV HOME /home/circleci
 
 USER circleci
 
+RUN mix do local.hex --force, local.rebar --force
+
 CMD ["/bin/sh"]
