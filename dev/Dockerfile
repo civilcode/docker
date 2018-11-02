@@ -70,6 +70,8 @@ RUN USER=dev && \
     mkdir -p /etc/fixuid && \
     printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 
+RUN mix do local.hex --force, local.rebar --force
+
 WORKDIR /app
 RUN chown dev:dev /app
 
