@@ -1,6 +1,6 @@
 # Based on https://hub.docker.com/r/circleci/elixir/~/dockerfile/
 
-FROM bitwalker/alpine-elixir-phoenix:1.8.0
+FROM bitwalker/alpine-elixir-phoenix:1.8.1
 
 LABEL maintainer="bonjour@civilcode.io"
 
@@ -23,7 +23,7 @@ RUN apk add docker \
 # docker compose
 # https://wiki.alpinelinux.org/wiki/Docker#Docker_Compose
 RUN apk add py-pip \
-  && pip install docker-compose \
+  && pip install docker-compose==1.23.2 \
   && docker-compose version
 
 # install dockerize
