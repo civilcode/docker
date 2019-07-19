@@ -1,4 +1,4 @@
-upgrade: update_version dev ci
+upgrade: update_version dev ci commit_changes
 
 update_version:
 	sed -i '' 's/FROM\ bitwalker\/alpine-elixir-phoenix:.*/FROM\ bitwalker\/alpine-elixir-phoenix:$(VERSION)/g' **/Dockerfile
@@ -19,3 +19,7 @@ build_ci:
 
 push_ci:
 	docker push civilcode/elixir-ci:$(VERSION)
+
+commit_changes:
+	git add .
+	git commit -m "Upgrade to elixir $(VERSION)"
