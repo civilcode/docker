@@ -1,3 +1,5 @@
+upgrade: update_version dev ci
+
 update_version:
 	sed -i '' 's/FROM\ bitwalker\/alpine-elixir-phoenix:.*/FROM\ bitwalker\/alpine-elixir-phoenix:$(VERSION)/g' **/Dockerfile
 	sed -i '' 's/FROM\ bitwalker\/alpine-elixir-phoenix:.*/FROM\ bitwalker\/alpine-elixir-phoenix:$(VERSION)/g' **/Dockerfile.*

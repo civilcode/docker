@@ -7,6 +7,12 @@
 
 Please see the sub-directories for specific languages and platforms.
 
+## Update a version
+     make upgrade VERSION=1.9.0
+     git add . && git commit
+
+The commit is not done automatically as there can be adjustment to make to the Dockefiles (eg: upgrade postgresql-client)
+
 ## About CivilCode Inc
 
 [CivilCode Inc.](http://www.civilcode.io) develops tailored business applications in
