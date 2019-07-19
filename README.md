@@ -8,7 +8,7 @@
 Please see the sub-directories for specific languages and platforms.
 
 ## Update a version
-     make upgrade VERSION=1.9.0
+     make upgrade VERSION=1.9.0 SUFFIX=a
 
 ## About CivilCode Inc
 
