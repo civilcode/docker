@@ -1,7 +1,7 @@
 upgrade: update_version dev ci commit_changes
 
 update_version:
-	find . -name "Dockerfile*" -exec sed -i 's/FROM\ bitwalker\/alpine-elixir-phoenix:.*/FROM\ bitwalker\/alpine-elixir-phoenix:$(VERSION)/g' {} \;
+	find . -name "Dockerfile*" -exec sed -i '' 's/FROM\ bitwalker\/alpine-elixir-phoenix:.*/FROM\ bitwalker\/alpine-elixir-phoenix:$(VERSION)/g' {} \;
 
 dev: build_dev	push_dev
 
