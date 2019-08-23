@@ -1,24 +1,24 @@
-upgrade: update_version dev ci commit_changes
+upgrade: version.update dev ci changes.commit
 
-update_version:
+version.update:
 	find . -name "Dockerfile*" -exec sed -i '' 's/FROM\ bitwalker\/alpine-elixir-phoenix:.*/FROM\ bitwalker\/alpine-elixir-phoenix:$(VERSION)/g' {} \;
 
-dev: build_dev	push_dev
+dev: dev.build dev.push
 
-build_dev:
+dev.build:
 	docker build --no-cache -t civilcode/elixir-dev:$(VERSION)$(SUFFIX) -f Dockerfile.dev .
 
-push_dev:
+dev.push:
 	docker push civilcode/elixir-dev:$(VERSION)$(SUFFIX)
 
-ci: build_ci push_ci
+ci: ci.build ci.push
 
-build_ci:
+ci.build:
 	docker build --no-cache -t civilcode/elixir-ci:$(VERSION)$(SUFFIX) -f Dockerfile.ci .
 
-push_ci:
+ci.push:
 	docker push civilcode/elixir-ci:$(VERSION)$(SUFFIX)
 
-commit_changes:
+changes.commit:
 	git add .
 	git commit -m "Upgrade to elixir $(VERSION)$(SUFFIX)"
