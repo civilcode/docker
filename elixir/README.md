@@ -2,14 +2,14 @@
 
 These Dockerfiles are used as base images for local development and CI.
 
-## Development
+Commands for managing the images are in the Makefile.
 
-    docker build --no-cache -t civilcode/elixir-dev:1.6.5a -f elixir/Dockerfile.dev .
-    docker run -i --name elixir-dev-runtime -t --rm civilcode/elixir-dev:1.6.5a
-    docker push civilcode/elixir-dev:1.6.5a
+## Setup
 
-## Versioning
+    git clone https://github.com/civilcode/docker.git
+    cd docker
 
-*  branch is created for each new version, i.e. `elixir-1.6.5_stable` -> `elixir-1.6.6_stable`
-*  updates to a version
-```
+Please see the sub-directories for specific languages and platforms.
+
+## Update a version
+     make upgrade VERSION=1.9.0 SUFFIX=a

@@ -1,11 +1,6 @@
 # CivilCode's Docker Images
 
-## Setup
-
-    git clone https://github.com/civilcode/docker.git
-    cd docker
-
-Please see the sub-directories for specific languages and platforms.
+- [Elixir](./elixir/README.md)
 
 ## About CivilCode Inc
 
