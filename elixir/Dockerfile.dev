@@ -1,24 +1,17 @@
-FROM civilcode/alpine-elixir-phoenix:1.11.2
+FROM bitwalker/alpine-elixir-phoenix:1.12.2
 
 LABEL maintainer="bonjour@civilcode.io"
 
+RUN apk update && \
+    apk upgrade --no-cache
+
 ## Install Postgresql (for demo data seeding):
 # Note that the version of postgresql-client changes over time.
-RUN apk add --no-cache --virtual .build-deps postgresql-client=12.5-r0
+RUN apk add --virtual postgresql-client-13.4-r0
 
 ## Install watchman
-RUN apk update && \
-    apk upgrade --no-cache && \
-    apk add autoconf automake libtool python2-dev linux-headers libressl-dev
-
-RUN git clone https://github.com/facebook/watchman.git && \
-   cd watchman && \
-   git checkout v4.9.0 && \
-  ./autogen.sh && \
-  ./configure --enable-lenient && \
-  make && \
-  make install
-
+RUN apk add --no-cache -X http://dl-cdn.alpinelinux.org/alpine/edge/testing watchman
+RUN mkdir /var/run/watchman
 RUN echo "cd /app && watchman -j < .watchman/format.json" >> ~/.bashrc
 
 RUN mix do local.hex --force, local.rebar --force
